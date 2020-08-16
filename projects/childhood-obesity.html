@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" class="full-height">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Data Projects Portfolio</title>
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Bootstrap core CSS -->
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="../css/mdb.min.css" rel="stylesheet">
+	<!-- Your custom styles (optional) -->
+	<link href="../css/style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+	<!--Main Navigation-->
+
+	<nav class="navbar sticky-top navbar-expand-lg scrolling-navbar not-home">
+		<div class="container">
+			<a class="navbar-brand" href="/index.html">Alice Moyon || Data Projects</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link pr-4" href="#about">About<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link pr-4" href="#projects">Projects</a>
+					</li>
+					<!--
+					<li class="nav-item">
+						<a class="nav-link pr-0" href="/blog.html">Blog</a>
+					</li>
+-->
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<main>
+		<div class="container">
+			<h2 class="project-title mt-5 mb-3">Childhood Obesity in the UK</h2>
+			<h6>Analysis of the nature and causes of childhood obesity in England for the Guy's and St Thomas' charity</h6>
+			<div class="techniques row col-12 my-4">
+				<div class="badge-pill mx-1 my-1">python</div>
+				<div class="badge-pill mx-1 my-1">geovisualisation</div>
+				<div class="badge-pill mx-1 my-1">plotly</div>
+				<div class="badge-pill mx-1 my-1">statistics</div>
+				<div class="badge-pill mx-1 my-1">data analysis</div>
+				<div class="badge-pill mx-1 my-1">feature selection</div>
+			</div>
+			<h3>Background & Objectives</h3>
+			<p>This analysis was originally commissioned by the Guy's and St Thomas' Charity through the <a href="https://www.vizforsocialgood.com/" target="_blank">viz for social good</a> website as a crowd-sourced data visualisation project. The Guy's and St Thomas' Charity is an independent, place-based foundation working to improve the health of people in the London boroughs of Lambeth and Southwark.</p>
+			<p>The aim of this project is for the charity to understand where to target their resources and which areas to fund in the London boroughs of Lambeth and Southwark in order to help lower childhood obesity levels. This will involve:</p>
+			<ul>
+				<li>identifying places most (and least) affected by childhood obesity</li>
+				<li>identifying who lives in the areas, using a range of socio demographic data</li>
+				<li>identifying what the contributing factors are. e.g. by exploring pollutant concentration levels, emissions data and sources of emissions with a particular focus on traffic and time</li>
+				<li>identifying how the childhood obesity has evolved over time</li>
+				<li>Identifying neighborhoods across the UK that have similar characteristics to neighborhoods in Lambeth and Southwark with high obesity rates.</li>
+			</ul>
+			<h3>Data</h3>
+			<p>We have two datasets containing <strong>obesity rates data</strong> over 8 time periods (2008 to 2018). Each dataset represents a stage of the UK national school curriculum: Reception relates to children aged between 4 and 5 years, Year 6 relates to children between 10 and 11 years old.</p>
+			<p>In addition, we have been provided with a dataset containing <strong>sociodemographic data</strong> for all of the UK statistical areas. The features available (over 100) cover various subjects such as health, employment, local amenities and the education levels of each area's population.</p>
+			<p>In terms of the <strong>data quality</strong> of both datasets, my analysis found a large number of missing values in the obesity rates, but only for specific areas. Where the latest rate could be inferred from previous years' data, a calculated rate has been used to replace the missing values. Where not enough data was available to infer rates, these were left blank and will simply not be included in the analysis. This was deemed an acceptable solution as the areas with missing values are not the most relevant for the GSST charity, but must be borne in mind as this will affect the accuracy of the reporting for rankings in particular</p>
+			<h3>Analysis</h3>
+			<p>This section will present the key findings from the analysis. For the full step-by-step investigation including all the data cleaning & processing steps, as well as the Python code used, please refer to the Jupyter notebook available on <a href="http://www.github.com/alicemoyon/childhood-obesity">github</a>.</p>
+			<p>Though the study will primarily focus on the London areas of Lambeth and Southwark, it is important to place it in the national context initially, in order to get an overall view of the issue and to understand how these specific areas may differ from the UK average. Looking at the average childhood obesity rates across the UK, there doesn't seem to have been any overall increase since 2008 (figure below, left). However, when we look at the distribution across the country, we can see that the inequalities have increased between areas over the last 10 years</p>
+			<div class="mx-auto text-center row col-12 mb-4">
+				<div class="embed-responsive embed-responsive-1by1 col-12 col-lg-6 mx-auto text-center">
+					<iframe scrolling="no" seamless="seamless" src="../img/average_national_children_obesity_rates.html"></iframe>
+				</div>
+				<div class="geoviz embed-responsive embed-responsive-16by9 col-12 col-lg-6 mx-auto text-center">
+					<iframe scrolling="no" seamless="seamless" src="../img/nat_distrib_over_time.html"></iframe>
+				</div>
+			</div>
+			<p>The latest figures for Year 6 children range from 3% to 41%, with a standard deviation of 5.8%, confirming the high level of variation between MSOAs. We also note from the first chart that the obesity levels are much lower for Reception age children, and there has been no increase in inequalities for this age group. Unsurprisingly, the obesity rates of the two age groups are correlated, but perhaps not as strongly as anticipated with a correlation coefficient of 0.63. This suggests that the two age groups may be affected by environmental factors in different ways and in different magnitudes. (we also saw that the Reception age group did not suffer from a worsening of inequalities over time). Hover over the chart below to view the data for each MSOA</p>
+			<div class="embed-responsive embed-responsive-16by9 col-12 mx-auto mb-3 text-center">
+				<iframe scrolling="no" seamless="seamless" src="../img/reception_y6_scatter.html"></iframe>
+			</div>
+			<h4>How do Lambeth & Southwark compare with the national picture?</h4>
+			<p>To place them in the national context, we can visualise the distribution of the obesity rates in those boroughs against the national distribution. From the chart below, it looks like the MSOAs in both boroughs fare worse than the national average. Southwark MSOAs seem worse than Lambeth MSOAs, with a skewed left distribution indicating a higher proportion of areas with very high obesity rates. The wider range for Southwark areas also indicate more inequalities in that borough. <i>Hover over charts to view data points and click on legend names to isolate each dataset.</i></p>
+			<div class="mx-auto text-center row col-12 mb-3">
+				<div class="embed-responsive embed-responsive-16by9 col-12 col-lg-6 mx-auto text-center">
+					<iframe scrolling="no" seamless="seamless" src="../img/lambeth_southwark_average_overtime.html"></iframe>
+				</div>
+				<div class="embed-responsive embed-responsive-4by3 col-12 col-lg-6 mx-auto text-center">
+					<iframe scrolling="no" seamless="seamless" src="../img/distribution_nat_lambeth_southwark.html"></iframe>
+				</div>
+			</div>
+			<p>Looking at the evolution over time for these 2 boroughs, there doesn't seem to have been any particular worsening, but as there is much variation within these areas, it might be more meaningful to look at the individual timelines for individual MSOAs within the boroughs instead.</p>
+			<p>Most MSOAs seem to fluctuate only slightly over time but a few do stand out as having more interesting patterns. The MSOAs following a clear downward trend could be investigate to identify any positive factors pontentially leading to better rates and significant downward or upward trends can also be taken into account as criteria when determining which areas will need more effort from the charity. <i>Double-click on an MSOA name to isolate its line.</i></p>
+			<div class="embed-responsive embed-responsive-16by9 col-12 mx-auto mb-2 text-center">
+				<iframe scrolling="no" seamless="seamless" src="../img/lambeth_southwark_rates_overtime.html"></iframe>
+			</div>
+			<h4>Identifying areas most and least affected by childhood obesity</h4>
+			<p>Before computing these rankings, we must first decide what constitutes an area. There is a choice between aggregating at the Local Authority level (e.g. Lambeth, Southwark) or using the MSOA level figures. The average standard deviation within each Local Authority is 4.15%, which is quite close to the standard deviation at the national level and we risk losing valuable information if we aggregate. Therefore, we will look at areas at the MSOA level.</p>
+			<p></p>
+			<p>I computed the rankings nationally, as well as for Lambeth & Southwark together, and separately. The most recent rate for each MSOA was used to determine the rank but the evolution over time could also be looked at later as an alternative in order to visualise which MSOAs have had the worst increase in rate since 2008</p>
+			<div class="embed-responsive embed-responsive-4by3 col-12 mx-auto text-center">
+				<iframe scrolling="yes" seamless="seamless" src="../img/most_affected.html"></iframe>
+			</div>
+			<p>Two MSOAs from the Southwark borough appear amongst the 20 most affected areas nationally: Southwark 014 (2nd worst affected in the UK) and Southwark 021 (14th). To decide where to prioritise their budget spend, I would recommend GSST look at the combined Lambeth & Soutwark rankings, in order to target the areas that are the worst affected overall. This will mean spending a larger part of their budget on Southwark areas and is only feasible if they are not required to spend equal amounts in each borough.</p>
+			<div class="embed-responsive embed-responsive-4by3 col-12 mx-auto text-center">
+				<iframe scrolling="no" seamless="seamless" src="../img/least_affected.html"></iframe>
+			</div>
+			<p>The wider range of rates in Southwark identified previously is also noticeable in these rankings.</p>
+			<p>The choropleth map below can help to visualise any localised patterns in London boroughs, and to place Southwark & Lambeth within the London context. <i>Zoom in to view specific areas and hover over to view the data.</i></p>
+			<div class="geoviz embed-responsive embed-responsive-16by9 col-12 mx-auto text-center">
+				<iframe scrolling="no" seamless="seamless" src="../img/london_obesity_geoviz.html"></iframe>
+			</div>
+			<br>
+			<h4>Identify the factors contributing to high obesity rates</h4>
+			<p>The challenge here is that we have a large number of features in the sociodemographic dataset and they cannot be visualised together. After calculating the correlation coefficient between each feature and the year 6 obesity rate, we can make the following observations:</p>
+			<ul>
+				<li>None of the variables in our dataset have a very strong correlation with the obesity rate. The highest correlation coefficient lies at -0.68. This may be an indication that our dataset is missing some important features and that more research is necessary to be able to confidently ascertain the factors driving the obesity rates.</li>
+				<li>The highest correlating features differ at the national level and for the Lambeth & Southwark boroughs. There are significant difference even between the factors affecting the rate in Lambeth and in Southwark. For example, the reception age obesity rate seems highly positively correlated with the rate in year 6 in Southwark, but not at all in the Lambeth borough.</li>
+			</ul>
+			<p>In addition to looking at the Pearson correlation coefficients, I used a feature selection technique (usually used to prepare a dataset for statistical modelling) to find other potential non-linear relationships between the features and the obesity rate. Combining the findings from the 2 methods, we arrive at the final list of factors below. </p>
+			<p></p>
+			<h3>Conclusions</h3>
+			<p>recommendations & next steps. review that all questions have been answered.</p>
+		</div>
+	</main>
+	<footer class="page-footer font-small">
+
+		<!-- Footer Elements -->
+		<div class="container">
+
+			<!-- Grid row-->
+			<div class="row">
+
+				<!-- Grid column -->
+				<div class="col-md-12 py-5">
+					<div class="mb-5 flex-center">
+
+						<!-- GitHub -->
+						<a class="footer-ic" href="http://www.github.com/alicemoyon" target="_blank">
+							<i class="fa fa-github fa-lg mr-md-5 mr-3 fa-3x"> </i>
+						</a>
+						<!--Linkedin -->
+						<a class="footer-ic" href="http://www.linkedin.com/in/alicemoyon" target="_blank">
+							<i class="fa fa-linkedin fa-lg mr-md-5 mr-3 fa-3x"> </i>
+						</a>
+					</div>
+				</div>
+				<!-- Grid column -->
+
+			</div>
+			<!-- Grid row-->
+
+		</div>
+		<!-- Footer Elements -->
+	</footer>
+	<!-- Footer -->
+
+	<!-- SCRIPTS -->
+	<!-- JQuery -->
+	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="../js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="../js/mdb.min.js"></script>
+</body>
+
+</html>

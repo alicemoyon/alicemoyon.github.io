@@ -1,0 +1,224 @@
+html,
+body,
+header,
+.view {
+	height: 100%;
+	color: rgb(55, 67, 77) !important;
+	font-family: 'Open Sans';
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+a {
+	color: #6da170;
+}
+
+a:hover {
+	color: #558e57;
+}
+
+a.anchor {
+	display: block;
+	position: relative;
+	top: -68px;
+	visibility: hidden;
+}
+
+hr {
+	width: 20%;
+	color: #d43a54;
+}
+
+p,
+li {
+	font-size: 1.1rem;
+}
+
+h2 {
+	text-transform: uppercase;
+	font-size: 1.75rem;
+	font-weight: 400;
+	font-family: 'Roboto';
+	letter-spacing: 0.5px;
+}
+
+h3 {
+	font-size: 24px;
+	font-weight: bolder;
+	font-family: 'Open Sans';
+	color: rgb(55, 67, 77);
+}
+
+h4 {
+	font-size: 1.25rem;
+	font-weight: 500;
+	font-family: 'Roboto';
+	color: rgb(55, 67, 77);
+}
+
+
+.btn {
+	background-color: #e0bfbe;
+	color: white;
+	font-family: 'Open Sans';
+	font-size: 1rem;
+	border-radius: 5px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+}
+
+.btn:hover {
+	background-color: #e0bfbe;
+	color: white;
+	font-family: 'Open Sans';
+	font-size: 1rem;
+	border-radius: 5px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+}
+
+
+.badge-pill {
+	border: 1px solid #6da170;
+	text-transform: capitalize;
+	color: #6da170;
+	background-color: white;
+}
+
+extra {
+	background-color: white !important;
+}
+
+/*************************/
+/* Header and navigation */
+/*************************/
+
+.intro-2 {
+	background: url("../img/hero_xl.jpg")no-repeat center center;
+	background-size: cover;
+}
+
+@media (max-width:768px) {
+	.intro-2 {
+		background: url("../img/hero_768.jpg")no-repeat center center;
+		background-size: cover;
+	}
+}
+
+@media (max-width:576px) {
+	.intro-2 {
+		background: url("../img/hero_mobile.jpg")no-repeat center center;
+		background-size: cover;
+	}
+}
+
+.navbar {
+	background-color: transparent;
+	box-shadow: none;
+}
+
+.navbar.not-home {
+	background-color: #e0bfbe;
+}
+
+.navbar-brand,
+.nav-link {
+	color: white !important;
+	font-size: 1.5rem;
+	font-weight: 400;
+}
+
+@media(max-width: 374px) {
+
+	.navbar-brand,
+	.nav-link {
+		color: white !important;
+		font-size: 1.25rem;
+		font-weight: 400;
+	}
+}
+
+.navbar-brand:hover,
+.nav-link:hover {
+	color: rgb(55, 67, 77) !important;
+	font-size: 1.5rem;
+	font-weight: 400;
+}
+
+.top-nav-collapse {
+	background-color: #e0bfbe;
+}
+
+.top-nav-collapse.show {
+	background-color: #e0bfbe;
+}
+
+.top-nav-collapse.show.not-home {
+	background-color: #e0bfbe;
+}
+
+.navbar-toggler-icon {
+	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+@media only screen and (max-width: 768px) {
+	.navbar {
+		background-color: #e0bfbe;
+	}
+}
+
+/**************************/
+/* About & skills section */
+/**************************/
+
+.skills {
+	border: 1px solid #e0bfbe;
+}
+
+/********************/
+/* Projects section */
+/********************/
+
+.project-section {
+	background-color: #f4e9e3;
+}
+
+.card .card-body .card-text {
+	color: #747373;
+	font-size: 1.1rem;
+	font-weight: 400;
+}
+
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-bottom-right > .mapboxgl-ctrl-attrib.mapboxgl-compact::after {
+	display: none;
+}
+
+.js-plotly-plot .plotly .mapboxgl-ctrl-attrib.mapboxgl-compact::after {
+	display: none;
+}
+
+
+
+
+/**********/
+/* Footer */
+/**********/
+
+.page-footer {
+	background-color: #ffffff;
+}
+
+.fa-github,
+.fa-linkedin {
+	color: #e0bfbe;
+}
+
+.fa-github:hover,
+.fa-linkedin:hover {
+	color: #747373;
+}
+
+/* lighter background color #f4e9e3
