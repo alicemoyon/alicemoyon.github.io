@@ -62,8 +62,7 @@
 			<p>The aim of this project is for the charity to understand where to target their resources and which areas to fund in the London boroughs of Lambeth and Southwark in order to help lower childhood obesity levels. This will involve:</p>
 			<ul>
 				<li>identifying places most (and least) affected by childhood obesity</li>
-				<li>identifying who lives in the areas, using a range of socio demographic data</li>
-				<li>identifying what the contributing factors are. e.g. by exploring pollutant concentration levels, emissions data and sources of emissions with a particular focus on traffic and time</li>
+				<li>identifying what the contributing factors are</li>
 				<li>identifying how the childhood obesity has evolved over time</li>
 				<li>Identifying neighborhoods across the UK that have similar characteristics to neighborhoods in Lambeth and Southwark with high obesity rates.</li>
 			</ul>
@@ -124,10 +123,19 @@
 				<li>None of the variables in our dataset have a very strong correlation with the obesity rate. The highest correlation coefficient lies at -0.68. This may be an indication that our dataset is missing some important features and that more research is necessary to be able to confidently ascertain the factors driving the obesity rates.</li>
 				<li>The highest correlating features differ at the national level and for the Lambeth & Southwark boroughs. There are significant difference even between the factors affecting the rate in Lambeth and in Southwark. For example, the reception age obesity rate seems highly positively correlated with the rate in year 6 in Southwark, but not at all in the Lambeth borough.</li>
 			</ul>
-			<p>In addition to looking at the Pearson correlation coefficients, I used a feature selection technique (usually used to prepare a dataset for statistical modelling) to find other potential non-linear relationships between the features and the obesity rate. Combining the findings from the 2 methods, we arrive at the final list of factors below. </p>
-			<p></p>
-			<h3>Conclusions</h3>
-			<p>recommendations & next steps. review that all questions have been answered.</p>
+			<p>In addition to looking at the Pearson correlation coefficients, I used a feature selection technique (more often used to prepare a dataset for statistical modelling) to find other potential non-linear relationships between the features and the obesity rate. Combining the findings from the 2 methods, I arrived at the final lists of factors below.</p>
+			<ul>
+				<li>Female & Male healthy life expectancy at birth</li>
+				<li>Percentage of children in poverty (after housing costs)</li>
+				<li>Numbers of households in poverty</li>
+				<li>Percentage of people who participated in sport and physical activity at least twice in the last 28 days</li>
+				<li>Net annual household income estimate after housing costs</li>
+				<li>Proportion of households with no car</li>
+				<li>Index of Multiple Deprivation (IMD) Score</li>
+			</ul>
+			<p>The factors above are calculated at the national level. When looking at the correlation coefficients for Lambeth and Southwark individually, they are quite different from each other, with no strong correlations at all showing for Lambeth. There is probably not enough data available to make reliable inferences from those coefficients in the boroughs independently.</p>
+			<p>From the list above, we can observe that the most impactful features relate to poverty and general physical health. They are very high level features and unfortunately not very helpful for GSST to develop an action plan from. I would recommend looking at a different set of features rather than high level sociodemographic data in order to make more specific recommendations on what issues to target in those areas to reduce the children obesity rate. In particular, it would be very interesting to study the impact of different measures & initiatives implemented in the past (at the local or national level)</p>
+			<p>Since a large majority of the features have a correlation coefficient between 0.2 and 0.5, developing a model could be useful here to determine if perhaps a combination of lower correlation features can have more impact together, and this could help make further recommendations to GSST in order to support the development of an action plan.</p>
 		</div>
 	</main>
 	<footer class="page-footer font-small">
@@ -171,6 +179,4 @@
 	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="../js/mdb.min.js"></script>
-</body>
-
-</html>
+</body></html>
