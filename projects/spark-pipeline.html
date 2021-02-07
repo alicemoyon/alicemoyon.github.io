@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" class="full-height">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Data Projects Portfolio</title>
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Bootstrap core CSS -->
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="../css/mdb.min.css" rel="stylesheet">
+	<!-- Your custom styles (optional) -->
+	<link href="../css/style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+	<!--Main Navigation-->
+
+	<nav class="navbar sticky-top navbar-expand-lg scrolling-navbar not-home">
+		<div class="container">
+			<a class="navbar-brand" href="/index.html">Alice Moyon || Data Projects</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link pr-4" href="../index.html#about">About<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link pr-4" href="../index.html#projects">Projects</a>
+					</li>
+					<!--
+					<li class="nav-item">
+						<a class="nav-link pr-0" href="/blog.html">Blog</a>
+					</li>
+-->
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<main>
+		<div class="container">
+			<h2 class="project-title mt-5 mb-3">ETL Data Pipeline</h2>
+			<h6>An Apache Spark ETL data pipeline processing large datasets of Google Local reviews and businesses and loading them into a Data Lake on S3 as well as a Redshift Data Warehouse</h6>
+			<div class="techniques row col-12 my-4">
+				<div class="badge-pill mx-1 my-1">data modelling</div>
+				<div class="badge-pill mx-1 my-1">data engineering</div>
+				<div class="badge-pill mx-1 my-1">Apache Spark</div>
+				<div class="badge-pill mx-1 my-1">Amazon EMR</div>
+				<div class="badge-pill mx-1 my-1">AWS Redshift</div>
+				<div class="badge-pill mx-1 my-1">Feature engineering</div>
+				<div class="badge-pill mx-1 my-1">SQL</div>
+				<div class="badge-pill mx-1 my-1">PySpark</div>
+			</div>
+			<h3>Background & Objectives</h3>
+			<p>This project was the capstone for the Udacity Data Engineering Nanodegree </p>
+			<p>The (imaginary) goal of this project was to create an ETL data pipeline to clean, process and enrich data from Google Local reviews of US-based businesses on Google Local and make it available for analysis by two different teams:</p>
+			<ul>
+				<li>a team of data scientists working on a Machine Learning model to cover a wide range of business categories</li>
+				<li>a team of data analysts that will perform an exploratory analysis of restaurant reviews for a business client who owns a US-based Italian restaurant chain</li>
+			</ul>
+			<h3>Data & Code</h3>
+			<p>We have three datasets as input:</p>
+			<ul>
+				<li>reviews.json contains over 10 million reviews of Google Local businesses across the world (<a href="https://cseweb.ucsd.edu/~jmcauley/datasets.html#google_local">download from here)</a></li>
+				<li>places.json contains data related to Google Local businesses across the world (<a href="https://cseweb.ucsd.edu/~jmcauley/datasets.html#google_local">download from here)</a></li>
+				<li>us_population_by_zipcode.csv which contains the opopulation totals for all zipcodes in the USA (obtained from <a href="https://blog.splitwise.com/2013/09/18/the-2010-us-census-population-by-zip-code-totally-free/">here)</a></li>
+			</ul>
+			<p>The code to execute this pipeline and launch the Redshift cluster is available on my Github page <a href="https://github.com/alicemoyon/dataeng-capstone">here</a></p>
+			<h3>Data Pipeline Architecture</h3>
+			<p>The first step in the project was to define a high level view of the data pipeline and decide on the most appropriate
+				tools & technologies. As the main dataset contains over 10 million rows, a distributed processing solution was required and Apache Spark was used to speed up the initial assessment of the data performed via a Jupyter notebook, as well as the ETL pipeline itself. To make full use of Spark's parallel processing capability, the pipeline is executed on an AWS EMR cluster running 3 instances.</p>
+			<p>To store the large dataset for the team of Data Scientists, I opted for a Data Lake on S3 using parquet format files, as this storage type is much cheaper than a data warehouse but still fast to query and compatible with Python tools to perform exploratory analyses and ML model development. This low-cost storage option meant we could keep the full text of the reviews for a potential NLP analysis as well.</p>
+			<p>As business analysts are deemed to have a different set of technical skills from the Data Scientists and primarily use SQL to query their data directly, I opted to create a smaller Data Warehouse using a Redshift database, containing only the data pertinent to their case study in order to minimise the cost (i.e. excluding the full review text, and including only categories relating restaurants, though the category is parameterised, should another project arise in the future that requires data for a different business category). A temporary data lake was created first on S3 as a staging dataset before loading the data into a Redshift database.</p>
+			<p>Below is a diagram of the data pipeline's high level architecture</p>
+			<div class="">
+				<img class="col-10" src="/img/high_level_data_pipeline_arch.jpeg" alt="high level architecture diagram">
+			</div>
+			<h3>Data Processing & Transformation</h3>
+			<p>An initial analysis of the data was performed to assess data quality and identify opportunities for feature engineering to enrich the dataset. As a result of the analysis, the following steps were included in the data pipeline:</p>
+			<ul>
+				<li>reformat the json files so they can be read as json by pySpark without corruption errors caused by formatting issues</li>
+				<li>remove non USA-based reviews (country derived from postcode)</li>
+				<li>enrich with local population data</li>
+				<li>drop irrelevant features such as GPS coordinates and phone numbers</li>
+				<li>drop rare categories where not enough reviews were available for a meaningful analysis
+				</li>
+			</ul>
+			<p>Some additional features were engineered as they could be a factor in the rating given by a user. e.g. the average rating given by each unique user, the day of the week and whether the review was written during the day or at night (which could influence the mood of the user at the time of writing).</p>
+			<p>The datasets were then combined into a large Data Lake containing all the reviews for US-based businesses, partitioned by business category. This column was chosen for partitioning as it's a likely candidate for aggregation in an ML model i.e. it is likely that a different model would be developed for each category, or group of categories.</p>
+			<p>In parallel to the Data Lake above, a temporary staging data lake was created without column partitioning. This was a necessary step as the COPY command to load the data into a Redshift Data Warehouse cannot otherwise include the partitioning column when reading from parquet files. Although this sadly meant an additional step in the pipeline, it was very fast and did not adversely impact the total processing time.</p>
+			<h4>Amazon Redshift Data Warehouse data model</h4>
+			<p>The data model for the Data warehouse is based on the STAR model. This format was selected as it is very clear and easily understandable and usable by the business analysts. The DW contains one fact table with the reviews data and three dimension tables containing details about places (businesses), users and population.</p>
+			<div class="">
+				<img class="col-10" src="/img/redshift_erd.png" alt="high level architecture diagram">
+			</div>
+			<p>Each row in the database is a review left by a user for a business in a category. If a business fits several categories, there is a record per category i.e. the same review is duplicated for each category representing the business, to allow aggregation at the category level.</p>
+			<p>NB: If there was a unique category per business, the category related to each business in the review would normally be more logically included on the places dimension table. However, as places can be represented by a number of categories (e.g. both Restaurant, Italian Restaurant and International Restaurant), I wanted to allow the business analyst to query by category to enable a more granular analysis. Having several records for the same place on the places table would have broken the referential integrity of the gPlusPlaceId foreign key between the reviews table and the places table.</p>
+			<p>In order to optimise query efficiency on the Redshift DW, I indicated Distribution Keys as well as Sort Keys in the schema.</p>
+			<ul>
+				<li>The reviews table is distributed and sorted by gPlusPlaceId, to allow for efficient joining with the places table.</li>
+				<li>The places table is distributed by gPlusPlaceId to allow efficient joining with the reviews table</li>
+				<li>The users table is distributed and sorted by gPlusUserId as this is the primary key and the foreign key referenced by the reviews table
+				<li>The population table is distributed by postcode, to allow efficient joining with the places table.
+				</li>
+			</ul>
+			<h3>Adapting the pipeline to a different scenario</h3>
+			<p>What if the pipeline needed to be run on a daily basis?</p>
+			<p>This current project is a once-off pipeline using historical data. However, if we were to collect the same data daily from a Google API, the same pipeline could be used with slight modifications (to append to the data lake & data warehouse instead of replacing the data with each job) and scheduled & monitored using Apache Airflow.</p>
+
+
+		</div>
+	</main>
+	<footer class="page-footer font-small">
+
+		<!-- Footer Elements -->
+		<div class="container">
+
+			<!-- Grid row-->
+			<div class="row">
+
+				<!-- Grid column -->
+				<div class="col-md-12 py-5">
+					<div class="mb-5 flex-center">
+
+						<!-- GitHub -->
+						<a class="footer-ic" href="http://www.github.com/alicemoyon" target="_blank">
+							<i class="fa fa-github fa-lg mr-md-5 mr-3 fa-3x"> </i>
+						</a>
+						<!--Linkedin -->
+						<a class="footer-ic" href="http://www.linkedin.com/in/alicemoyon" target="_blank">
+							<i class="fa fa-linkedin fa-lg mr-md-5 mr-3 fa-3x"> </i>
+						</a>
+					</div>
+				</div>
+				<!-- Grid column -->
+
+			</div>
+			<!-- Grid row-->
+
+		</div>
+		<!-- Footer Elements -->
+	</footer>
+	<!-- Footer -->
+
+	<!-- SCRIPTS -->
+	<!-- JQuery -->
+	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="../js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="../js/mdb.min.js"></script>
+</body></html>
