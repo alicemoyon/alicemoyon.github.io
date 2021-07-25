@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" class="full-height">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Data Projects Portfolio</title>
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Bootstrap core CSS -->
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="../css/mdb.min.css" rel="stylesheet">
+	<!-- Your custom styles (optional) -->
+	<link href="../css/style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+	<!--Main Navigation-->
+
+	<nav class="navbar sticky-top navbar-expand-lg scrolling-navbar not-home">
+		<div class="container">
+			<a class="navbar-brand" href="/index.html">Alice Moyon || Data Projects</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link pr-4" href="../index.html#about">About<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link pr-4" href="../index.html#projects">Projects</a>
+					</li>
+					<!--
+					<li class="nav-item">
+						<a class="nav-link pr-0" href="/blog.html">Blog</a>
+					</li>
+-->
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<main>
+		<div class="container">
+			<h2 class="project-title mt-5 mb-3">Cats v Dogs</h2>
+			<h6>A Data Streaming application that analyses Tweets in real-time to determine whether cats or dogs are more popular on Twitter at any given time.</h6>
+			<div class="techniques row col-12 my-4">
+				<div class="badge-pill mx-1 my-1">data streaming</div>
+				<div class="badge-pill mx-1 my-1">AWS Kinesis Data Firehose</div>
+				<div class="badge-pill mx-1 my-1">AWS Elasticsearch Service</div>
+				<div class="badge-pill mx-1 my-1">Kibana</div>
+				<div class="badge-pill mx-1 my-1">AWS Lambda</div>
+				<div class="badge-pill mx-1 my-1">real-time dashboard</div>
+				<div class="badge-pill mx-1 my-1">Streaming analytics</div>
+			</div>
+			<h3>Objectives</h3>
+			<p>The goal of this project was to learn the fundamental components of a data streaming pipeline by finding a simple, highly abstracted cloud-based method to analyse & visualise a data stream in real-time.</p>
+
+			<p>The application aims to analyse the popularity of cats and dogs on Twitter at any particular point in time and visualise its evolution in real-time on a dashboard. Popularity is judged simply by the number of tweets coming through with cat or dog related hashtags. This first implementation was kept as simple as possible as a proof-of-concept of the end-to-end pipeline and further complexity will be added to the application gradually.</p>
+
+			<p>The corresponding code is available on my Github page <a href="https://github.com/alicemoyon/catsvdogs">here</a></p>
+			<h3 class="mt-5">Architecture</h3>
+			<div class="mb-5">
+				<img class="col-10" src="/img/aws_architecture.png" alt="cats v dogs aws architecture">
+			</div>
+
+			<h4 class="mt-5">Twitter API and Python Script</h4>
+			<p>The Python script serves two main purposes:</p>
+			<ul>
+				<li>It connects to the Twitter API to set the rules that specify which Tweets will be streamed. The stream will only include Tweets with hashtags related to cats or dogs that also contain images or videos.</li>
+				<li>It then opens a persistent connection to the Twitter Filtered Stream API and ingests the streaming Tweet objects into the Firehose Delivery Stream. The fields contained in the Tweet objects are determined by the HTTP query parameter. In this particualr implementation, the following fields are included: Tweet Id, Retweet count, Reply count, Like count, Quote count, Tweet text (including hashtags), Matching rules id, Matching rules tag.</li>
+			</ul>
+			<p>The script contains a loop to automatically reconnect if the stream is disconnected or encounters any exception such as unexpected record formats.</p>
+
+			<script src="https://gist.github.com/alicemoyon/60a48e6d15754158567b7bfd20b5d0a5.js"></script>
+
+			<h4 class="mt-5">AWS Firehose Delivery Stream + Lambda function</h4>
+			<p>The Kinesis Data Firehose service ingests, transforms and delivers the streaming data records to Elasticsearch. It also delivers a back-up of each record to an S3 bucket.</p>
+			<p>The Lambda function processes each record as it goes through the stream. It cleans up each Tweet, keeping only the relevant fields for further analysis (the granularity of the Twitter query parameters allowed means that some fields are included by the Twitter API by default and need to be pruned to save on space and compute time). It also adds a timestamp and converts the record to JSON format (required for Elasticsearch) before pushing the record back into the Firehose stream for delivery to its destination.</p>
+			<script src="https://gist.github.com/alicemoyon/59412e803fa7ee0389629af5dec22d91.js"></script>
+
+			<h4 class="mt-5">Elasticsearch + Kibana</h4>
+			<p>Elasticsearch is a distributed, JSON-based search and analytics engine. The AWS ES service is a fully managed service to deploy and run an Elasticsearch cluster. The integration with Firehose in AWS is pretty seamless and the schema of the records is automatically recognised by ES and reflected into an ES index.</p>
+
+			<p>The real-time visualisation dashboard was created using Kibana, which comes built-in with Elasticsearch. It displays a number of metrics and updates automatically every 60 seconds.</p>
+			<div class="mb-5">
+				<img class="col-10" src="/img/kibana_dashboard.png" alt="cats v dogs aws architecture">
+			</div>
+			<!--
+
+			<iframe class="col-12 py-3" src="https://search-cvd-domain-1-liism7xvgbzq4sqsmnmkadz7dq.eu-west-1.es.amazonaws.com/_plugin/kibana/app/dashboards#/view/318948a0-ea61-11eb-8259-f7d5b5ae35b2?embed=true&_g=(filters:!(),query:(language:kuery,query:''),refreshInterval:(pause:!f,value:60000),time:(from:now%2Fd,to:now%2Fd))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),query:(language:kuery,query:''),timeRestore:!t,title:'Cats%20vs%20Dogs',viewMode:view)&hide-filter-bar=true"></iframe>
+-->
+			<h3>Plans & ideas for enhancements</h3>
+			<ul>
+				<li>Additional in-stream analytics with a more accurate method to assess popularity. For example, using the number of likes or retweets as they add up throughout the day. All tweets come in only once, with 0 likes in the count field. This would require a separate piece of functionality with continuous API calls to retrieve the latest like count for each tweet previously streamed by the application.
+
+				</li>
+				<li>Exploring the full capabilities of Elasticsearch & Kibana for more sophisticated analytics and visualisations (e.g. highlighting the most popular Tweet of the hour, text field reacting to the data evolution in real-time etc...)
+				</li>
+				<li>Including a call to an ML model to determine the sentiment of each streamed Tweet. A Tweet with a negative connotation should be be excluded from the count that determines popularity</li>
+			</ul>
+
+		</div>
+	</main>
+	<footer class="page-footer font-small">
+
+		<!-- Footer Elements -->
+		<div class="container">
+
+			<!-- Grid row-->
+			<div class="row">
+
+				<!-- Grid column -->
+				<div class="col-md-12 py-5">
+					<div class="mb-5 flex-center">
+
+						<!-- GitHub -->
+						<a class="footer-ic" href="http://www.github.com/alicemoyon" target="_blank">
+							<i class="fa fa-github fa-lg mr-md-5 mr-3 fa-3x"> </i>
+						</a>
+						<!--Linkedin -->
+						<a class="footer-ic" href="http://www.linkedin.com/in/alicemoyon" target="_blank">
+							<i class="fa fa-linkedin fa-lg mr-md-5 mr-3 fa-3x"> </i>
+						</a>
+					</div>
+				</div>
+				<!-- Grid column -->
+
+			</div>
+			<!-- Grid row-->
+
+		</div>
+		<!-- Footer Elements -->
+	</footer>
+	<!-- Footer -->
+
+	<!-- SCRIPTS -->
+	<!-- JQuery -->
+	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="../js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="../js/mdb.min.js"></script>
+</body></html>
